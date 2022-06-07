@@ -22,6 +22,8 @@ class RecommendedSerializers(serializers.ModelSerializer):
         
 class  jsonOrderItem(serializers.ModelSerializer):
     item= serializers.CharField(source='item.Name')
+    price= serializers.CharField(source='item.price')
+    image= serializers.CharField(source='item.image')
     class Meta:
         model = OrderItem
         fields = "__all__"
