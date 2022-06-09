@@ -13,11 +13,11 @@ class CategorySerializers(serializers.ModelSerializer):
         fields = ['category_id','Name','category_products']
         
 class RecommendedSerializers(serializers.ModelSerializer):
-    product= serializers.CharField(source='product_name.Name')
+    product_name= HomeSerializers( read_only=True,)
     recomended_devices =  HomeSerializers(many=True, read_only=True,)
     class Meta:
         model = Recommended
-        fields = ['recommend_id','product','recomended_devices']
+        fields = ['product_name','recomended_devices']
 
         
 class  jsonOrderItem(serializers.ModelSerializer):
