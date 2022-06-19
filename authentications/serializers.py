@@ -7,24 +7,20 @@ from .models import Person,Company,User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['username', 'email', 'is_person']
+        fields=[ 'email', 'is_person']
 
             
 class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
     password2=serializers.CharField(style={"input_type":"password"}, write_only=True)
-    phone_number=serializers.CharField(source='Company.phone_number')
-    tax_number=serializers.CharField(source='Company.tax_number')
-    location=serializers.CharField(source='Company.location')
     class Meta:
         model=User
-        fields=['username','email','password', 'password2','phone_number','tax_number','location']
+        fields=['email','password', 'password2']
         extra_kwargs={
             'password':{'write_only':True}
         }
     
     def save(self, **kwargs):
         user=User(
-            username=self.validated_data['username'],
             email=self.validated_data['email']
         )
         password=self.validated_data['password']
@@ -34,33 +30,15 @@ class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.is_company=True
         user.save()
-        
-        user =Company (user=user,
-                phone_number=self.validated_data.get('phone_number'),
-                tax_number= self.validated_data.get('tax_number'),
-                location= self.validated_data.get('location'),
-            ),
-        user.save()
         Company.objects.create(user=user)
         return user
     
-    def get_cleaned_data(self):
-            data = super(CompanyCustomRegistrationSerializer, self).get_cleaned_data()
-            extra_data = {
-                'phone_number' : self.validated_data.get('phone_number', ''),
-                'tax_number': self.validated_data.get('tax_number', ''),
-                'location': self.validated_data.get('location', ''),
-            }
-            data.update(extra_data)
-            return data
-
+    
 class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
     password2=serializers.CharField(style={"input_type":"password"}, write_only=True)
-    phone_number=serializers.CharField(source='Person.phone_number')
-    address=serializers.CharField(source='Person.address')
     class Meta:
         model=User
-        fields=['username','email','password', 'password2','phone_number','address']
+        fields=['email','password', 'password2']
         extra_kwargs={
             'password':{'write_only':True}
         }
@@ -68,7 +46,6 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
 
     def save(self, **kwargs):
         user=User(
-            username=self.validated_data['username'],
             email=self.validated_data['email']
         )
         password=self.validated_data['password']
@@ -84,9 +61,21 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializers(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=128, min_length=6 , write_only=True) 
+    password = serializers.CharField(write_only=True) 
     class Meta:
         
         model= User
-        fields = ('email','password','token')
-        read_only_fields = ['token']
+        fields = ('email','password')
+        # read_only_fields = ['token']
+        
+
+
+class  jsonPerson(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ['user','phone_number','address','image']
+
+class  jsonCompany(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ['user','phone_number','tax_number','location','image'] 

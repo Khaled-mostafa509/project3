@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL='authentications.User'
 ACCOUNT_UNIQUE_EMAIL= True
-
+USERNAME_FIELD='email'
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -94,25 +94,50 @@ TEMPLATES = [
 WSGI_APPLICATION = 'test_project.wsgi.application'
 CSRF_TRUSTED_ORIGINS = ["https://gradproject.azurewebsites.net", "https://www.gradproject.azurewebsites.net"]
 
+# DATABASES = {
+
+#     'default': {
+
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+#         'NAME': 'd6nt5ubcpp88l2',
+
+#         'USER': 'bhzinpjlgqzgqy',
+
+#         'PASSWORD': '753cabce29f409b5c90161d504bd9422f3cefa2b1dbd23ec2ca295ec6a1c3467',
+
+#         'HOST': 'ec2-54-165-178-178.compute-1.amazonaws.com',
+
+#         'PORT': '5432'
+
+#     }
+
+# }
 DATABASES = {
 
     'default': {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'd6nt5ubcpp88l2',
+        'NAME': 'postgres',
 
-        'USER': 'bhzinpjlgqzgqy',
+        'USER': 'khaled1@azure99',
 
-        'PASSWORD': '753cabce29f409b5c90161d504bd9422f3cefa2b1dbd23ec2ca295ec6a1c3467',
+        'PASSWORD': 'K8H6A9L9ed*',
 
-        'HOST': 'ec2-54-165-178-178.compute-1.amazonaws.com',
+        'HOST': 'azure99.postgres.database.azure.com',
 
         'PORT': '5432'
 
     }
 
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 import dj_database_url
 dj_heroku = dj_database_url.config(conn_max_age=600)
 

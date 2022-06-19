@@ -12,6 +12,7 @@ rrr.register('', views.order)
 
 r = routers.DefaultRouter()
 r.register('', views.product)
+
 urlpatterns = [
     path('Category/',views.Category_listAPI,name='category'), 
     path('order/', include(rrr.urls)),

@@ -20,13 +20,20 @@ from . import  views
 from .views import ( CompanySignupView,
  PersonSignupView,
  CustomAuthToken, LogoutView)
+from rest_framework import routers
 
+r2 = routers.DefaultRouter()
+r2.register('', views.viewsPerson)
+
+r3 = routers.DefaultRouter()
+r3.register('', views.viewsCompany)
 
 urlpatterns = [
     path('signup/company/', CompanySignupView.as_view()),
     path('signup/user/', PersonSignupView.as_view()),
     path('login/',CustomAuthToken.as_view(), name='auth-token'),
     path('logout/', LogoutView.as_view(), name='logout-view'),
-
+    path('profile/user/', include(r2.urls)),
+    path('profile/company/', include(r3.urls)),
     
 ]

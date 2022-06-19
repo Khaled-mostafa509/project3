@@ -1,4 +1,4 @@
-from .models import Products ,Category,OrderItem , Order ,Recommended
+from .models import Product ,Category,OrderItem , Order ,Recommended
 from .serializers import HomeSerializers,CategorySerializers  ,RecommendedSerializers ,jsonOrder,jsonOrderItem
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -24,7 +24,7 @@ def Recommended_listAPI(request):
     return Response(RecommendedSerializers(all_ads,many=True).data)
 
 class product(viewsets.ModelViewSet):
-    queryset = Products.objects.all()
+    queryset = Product.objects.all()
     serializer_class = HomeSerializers
     
 

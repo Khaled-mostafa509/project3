@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from .models import Products , Order , OrderItem ,Recommended,Category 
+from .models import Product , Order , OrderItem ,Recommended,Category 
 
 class HomeSerializers(serializers.ModelSerializer):
+    category= serializers.CharField()
     class Meta:
-        model = Products
-        fields = '__all__'
+        model = Product
+        fields = ['product_id','Name','description','category','price','Production_country','image']
 
 class CategorySerializers(serializers.ModelSerializer):
     category_products =  HomeSerializers(many=True, read_only=True)
@@ -13,7 +14,7 @@ class CategorySerializers(serializers.ModelSerializer):
         fields = ['category_id','Name','category_products']
         
 class RecommendedSerializers(serializers.ModelSerializer):
-    product_name= HomeSerializers( read_only=True,)
+    product_name= HomeSerializers(read_only=True,)
     recomended_devices =  HomeSerializers(many=True, read_only=True,)
     class Meta:
         model = Recommended
