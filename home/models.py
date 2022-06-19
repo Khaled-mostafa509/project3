@@ -15,7 +15,7 @@ class Product(models.Model):
     Name=models.CharField( max_length=50)
     description = models.TextField(max_length=1000)
     category=models.ForeignKey("Category", on_delete=models.CASCADE,null=True)
-    price = models.DecimalField(max_digits=20, decimal_places=0)
+    price = models.DecimalField(max_digits=20, decimal_places=0,null=True)
     Production_country = models.CharField( max_length=50)
     image = models.ImageField( null= True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)
