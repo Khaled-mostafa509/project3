@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
+from django.db.models.signals import pre_save,post_save ,post_delete
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -36,27 +37,13 @@ class User(AbstractUser):
   is_person = models.BooleanField(default=False)
   is_company = models.BooleanField(default=False)
   email=models.EmailField("email_address", unique=True)
+  phone_number = models.CharField(max_length=11)
+  address = models.CharField(max_length=100)
+  image = models.ImageField( null= True)
+  tax_number = models.CharField(max_length=100,null=True,blank=True)
   objects = UserManager()
   USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = []
   
-class Person(models.Model):
-    user = models.OneToOneField(
-      settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    phone_number = models.CharField(max_length=11)
-    address = models.CharField(max_length=100)
-    image = models.ImageField( null= True)
-    created_at=models.DateTimeField(auto_now_add=True,null=True)
-    def __str__(self):
-        return str(self.user)
 
-class Company(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=11)
-    tax_number = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
-    image = models.ImageField( null= True)
-    created_at=models.DateTimeField(auto_now_add=True,null=True)
-    def __str__(self):
-        return str(self.user)
+    

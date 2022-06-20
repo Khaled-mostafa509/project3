@@ -2,10 +2,10 @@ from django.http import request
 from rest_framework import generics, permissions, status,viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from .serializers import CompanyCustomRegistrationSerializer, PersonCustomRegistrationSerializer, UserSerializer,jsonCompany,jsonPerson ,LoginSerializers
+from .serializers import CompanyCustomRegistrationSerializer, PersonCustomRegistrationSerializer, UserSerializer,LoginSerializers
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
-from .models import Person,Company,User
+from .models import User
 from .permissions import IsCompanyUser, IsPersonUser
 
 class CompanySignupView(generics.GenericAPIView):
@@ -23,14 +23,20 @@ class CompanySignupView(generics.GenericAPIView):
 
 class PersonSignupView(generics.GenericAPIView):
     serializer_class=PersonCustomRegistrationSerializer
-    def post(self, request, *args, **kwargs):
-        serializer=self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user=serializer.save()
-        return Response({
-            "user":UserSerializer(user, context=self.get_serializer_context()).data,
-            "message":"account created successfully"
-        })
+    def post(self, request, format=None):
+        serializer = PersonCustomRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def post(self, request, *args, **kwargs):
+    #     serializer=self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     user=serializer.save()
+    #     return Response({
+    #         "user":UserSerializer(user, context=self.get_serializer_context()).data,
+    #         "message":"account created successfully"
+    #     })
 
 class CustomAuthToken(ObtainAuthToken):
     # serializer_class=LoginSerializers
@@ -65,11 +71,4 @@ class CompanyOnlyView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
-class viewsPerson(viewsets.ModelViewSet):
-    queryset = Person.objects.all()
-    serializer_class = jsonPerson
-
-
-class viewsCompany(viewsets.ModelViewSet):
-    queryset = Company.objects.all()
-    serializer_class = jsonCompany
+    

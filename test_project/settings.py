@@ -34,8 +34,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL='authentications.User'
-ACCOUNT_UNIQUE_EMAIL= True
-USERNAME_FIELD='email'
+# ACCOUNT_UNIQUE_EMAIL= True
+
 
 INSTALLED_APPS = [
     'jazzmin',

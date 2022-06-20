@@ -2,7 +2,7 @@ from django.db import models
 from rest_framework import serializers ,permissions
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate , login
-from .models import Person,Company,User
+from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,14 +14,19 @@ class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
     password2=serializers.CharField(style={"input_type":"password"}, write_only=True)
     class Meta:
         model=User
-        fields=['email','password', 'password2']
+        fields=['email','password', 'password2','first_name','address','phone_number','image','tax_number']
         extra_kwargs={
             'password':{'write_only':True}
         }
     
     def save(self, **kwargs):
         user=User(
-            email=self.validated_data['email']
+            email=self.validated_data['email'],
+            first_name=self.validated_data['first_name'],
+            address=self.validated_data['address'],
+            phone_number=self.validated_data['phone_number'],
+            image=self.validated_data['image'],
+            tax_number=self.validated_data['tax_number']
         )
         password=self.validated_data['password']
         password2=self.validated_data['password2']
@@ -38,7 +43,7 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
     password2=serializers.CharField(style={"input_type":"password"}, write_only=True)
     class Meta:
         model=User
-        fields=['email','password', 'password2']
+        fields=['email','password', 'password2','first_name','address','phone_number','image']
         extra_kwargs={
             'password':{'write_only':True}
         }
@@ -46,7 +51,11 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
 
     def save(self, **kwargs):
         user=User(
-            email=self.validated_data['email']
+            email=self.validated_data['email'],
+            first_name=self.validated_data['first_name'],
+            address=self.validated_data['address'],
+            phone_number=self.validated_data['phone_number'],
+            image=self.validated_data['image']
         )
         password=self.validated_data['password']
         password2=self.validated_data['password2']
@@ -69,13 +78,3 @@ class LoginSerializers(serializers.ModelSerializer):
         # read_only_fields = ['token']
         
 
-
-class  jsonPerson(serializers.ModelSerializer):
-    class Meta:
-        model = Person
-        fields = ['user','phone_number','address','image']
-
-class  jsonCompany(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = ['user','phone_number','tax_number','location','image'] 
