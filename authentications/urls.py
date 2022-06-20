@@ -22,7 +22,6 @@ from .views import ( CompanySignupView,
  CustomAuthToken, LogoutView)
 
 
-
 urlpatterns = [
     path('signup/company/', CompanySignupView.as_view()),
     path('signup/user/', PersonSignupView.as_view()),

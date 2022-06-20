@@ -14,7 +14,7 @@ class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
     password2=serializers.CharField(style={"input_type":"password"}, write_only=True)
     class Meta:
         model=User
-        fields=['email','password', 'password2','first_name','address','phone_number','image','tax_number']
+        fields=['email','password', 'password2','first_name','address','phone_number','tax_number']
         extra_kwargs={
             'password':{'write_only':True}
         }
@@ -25,7 +25,7 @@ class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
             first_name=self.validated_data['first_name'],
             address=self.validated_data['address'],
             phone_number=self.validated_data['phone_number'],
-            image=self.validated_data['image'],
+            # image=self.validated_data['image'],
             tax_number=self.validated_data['tax_number']
         )
         password=self.validated_data['password']
@@ -40,9 +40,10 @@ class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
     
 class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
     password2=serializers.CharField(style={"input_type":"password"}, write_only=True)
+    
     class Meta:
         model=User
-        fields=['email','password', 'password2','first_name','address','phone_number','image']
+        fields=['email','password', 'password2','first_name','address','phone_number']
         extra_kwargs={
             'password':{'write_only':True}
         }
@@ -54,7 +55,7 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
             first_name=self.validated_data['first_name'],
             address=self.validated_data['address'],
             phone_number=self.validated_data['phone_number'],
-            image=self.validated_data['image']
+            # image=self.validated_data['image']
         )
         password=self.validated_data['password']
         password2=self.validated_data['password2']

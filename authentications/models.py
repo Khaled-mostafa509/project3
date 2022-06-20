@@ -39,7 +39,7 @@ class User(AbstractUser):
   email=models.EmailField("email_address", unique=True)
   phone_number = models.CharField(max_length=11)
   address = models.CharField(max_length=100)
-  image = models.ImageField( null= True)
+  image = models.ImageField( null= False)
   tax_number = models.CharField(max_length=100,null=True,blank=True)
   objects = UserManager()
   USERNAME_FIELD = 'email'
