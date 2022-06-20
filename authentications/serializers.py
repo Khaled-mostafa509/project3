@@ -35,7 +35,6 @@ class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.is_company=True
         user.save()
-        Company.objects.create(user=user)
         return user
     
     
@@ -64,7 +63,6 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.is_person=True
         user.save()
-        Person.objects.create(user=user)
         return user
 
 
