@@ -113,31 +113,31 @@ CSRF_TRUSTED_ORIGINS = ["https://gradproject.azurewebsites.net", "https://www.gr
 #     }
 
 # }
-DATABASES = {
-
-    'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'postgres',
-
-        'USER': 'khaled1@azure99',
-
-        'PASSWORD': 'K8H6A9L9ed*',
-
-        'HOST': 'azure99.postgres.database.azure.com',
-
-        'PORT': '5432'
-
-    }
-
-}
 # DATABASES = {
+
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+#         'NAME': 'postgres',
+
+#         'USER': 'khaled1@azure99',
+
+#         'PASSWORD': 'K8H6A9L9ed*',
+
+#         'HOST': 'azure99.postgres.database.azure.com',
+
+#         'PORT': '5432'
+
 #     }
+
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 import dj_database_url
 dj_heroku = dj_database_url.config(conn_max_age=600)
 
