@@ -55,6 +55,7 @@ class OrderItem(models.Model):
     def __str__(self):
         return str(self.user.email) + " " + str(self.item.Name)
     
+    
 class Order(models.Model):
     status_choices = (
         (1, 'PENDING'),
@@ -63,7 +64,6 @@ class Order(models.Model):
     )
     id=models.AutoField(primary_key=True,name="order_id")
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-    # items=models.ManyToManyField("OrderItem", related_name="order")
     total_price = models.FloatField(default=0)
     profit = models.DecimalField(max_digits=50, decimal_places=2, default=0.00)
     status = models.IntegerField(choices = status_choices, default=1)
@@ -78,7 +78,6 @@ def correct_price(sender, **kwargs):
     price_of_product = Product.objects.get(product_id=cart_items.item.product_id)
     cart_items.price = cart_items.quantity * float(price_of_product.price)
     total_cart_items = OrderItem.objects.filter(user = cart_items.user )
-    # cart = Order.objects.get(order_id = cart_items.cart.order_id)
     cart=Order.objects.create(user_id=cart_items.user.id)
     cart.total_price = cart_items.price
     multiplier = 10 / 100

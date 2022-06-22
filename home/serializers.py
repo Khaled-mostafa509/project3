@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Product , Order , OrderItem ,Recommended,Category 
-
+from django.db import models
+from authentications.models import User
 class HomeSerializers(serializers.ModelSerializer):
     category= serializers.CharField()
     class Meta:
@@ -22,12 +23,10 @@ class RecommendedSerializers(serializers.ModelSerializer):
 
         
 class  jsonOrderItem(serializers.ModelSerializer):
-    item= serializers.CharField(source='item.Name')
-    price= serializers.CharField(source='item.price')
-    image= serializers.CharField(source='item.image')
+    item_name = serializers.CharField(source='item.Name')
     class Meta:
         model = OrderItem
-        fields = "__all__"
+        fields = ['item_name','quantity','price','user','item']
         
 class  jsonOrder(serializers.ModelSerializer):
     # items= serializers.CharField(source=f"{OrderItem.quantity} of {OrderItem.item}")

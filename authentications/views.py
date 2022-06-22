@@ -30,20 +30,20 @@ class CompanySignupView(generics.GenericAPIView):
 
 class PersonSignupView(generics.GenericAPIView):
     serializer_class=PersonCustomRegistrationSerializer
-    def post(self, request, format=None):
-        serializer = PersonCustomRegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    # def post(self, request, *args, **kwargs):
-    #     serializer=self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     user=serializer.save()
-    #     return Response({
-    #         "user":UserSerializer(user, context=self.get_serializer_context()).data,
-    #         "message":"account created successfully"
-    #     })
+    # def post(self, request, format=None):
+    #     serializer = PersonCustomRegistrationSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user=serializer.save()
+        return Response({
+            "user":UserSerializer(user, context=self.get_serializer_context()).data,
+            "message":"account created successfully"
+        })
 
 class CustomAuthToken(ObtainAuthToken):
     # serializer_class=LoginSerializers

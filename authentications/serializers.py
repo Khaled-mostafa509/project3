@@ -7,7 +7,7 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=[ 'email', 'is_person']
+        fields=[ 'email', 'is_person','first_name','address','phone_number','image']
 
             
 class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
@@ -43,7 +43,7 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=User
-        fields=['email','password', 'password2','first_name','address','phone_number']
+        fields=['email','password', 'password2','first_name','address','phone_number','image']
         extra_kwargs={
             'password':{'write_only':True}
         }
@@ -55,7 +55,7 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
             first_name=self.validated_data['first_name'],
             address=self.validated_data['address'],
             phone_number=self.validated_data['phone_number'],
-            # image=self.validated_data['image']
+            image=self.validated_data['image']
         )
         password=self.validated_data['password']
         password2=self.validated_data['password2']
